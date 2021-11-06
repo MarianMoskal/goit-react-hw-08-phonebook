@@ -9,16 +9,23 @@ import {
   Submit,
   FormS,
   Title,
-  Spinner,
+  Error,
 } from "../views-styles/LoginView.styled";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function LoginView() {
   const dispatch = useDispatch();
+
+  const error = useSelector(authSelectors.getError);
+  const loading = useSelector(authSelectors.getLoading);
   const isLoggedIn = useSelector(authSelectors.getLoggedIn);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = e.target;
+    const { email, password, button } = e.target;
+    button.disabled = { loading };
+
     dispatch(logIn({ email: email.value, password: password.value }));
     e.target.reset();
   };
@@ -53,7 +60,17 @@ export default function LoginView() {
         <Submit type="submit" id="button">
           Log in
         </Submit>
+
+        <Loader
+          visible={loading}
+          type="Circles"
+          color="#d0ff00"
+          height={20}
+          width={20}
+        />
       </FormS>
+
+      {error && <Error>{error}</Error>}
 
       {isLoggedIn ? <Redirect exact to="/" /> : null}
     </>

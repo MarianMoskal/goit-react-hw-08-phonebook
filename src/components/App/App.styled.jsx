@@ -1,8 +1,8 @@
-// import styled from "@emotion/styled";
+import styled from "@emotion/styled";
 
-// const Title = styled.h1`
-// text-align: center;
-// color: yellow;
-// `;
+const Title = styled.h1`
+  text-align: center;
+  /* color: yellow; */
+`;
 
-// export { Title };
+export { Title };

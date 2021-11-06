@@ -1,5 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router";
+import { authSelectors } from "redux/auth";
 import { register } from "redux/auth/auth-operations";
 import {
   Label,
@@ -7,15 +9,21 @@ import {
   Submit,
   FormS,
   Title,
-  Spinner,
+  Error,
 } from "../views-styles/RegisterView.styled";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function RegisterView() {
   const dispatch = useDispatch();
+  const error = useSelector(authSelectors.getError);
+  const loading = useSelector(authSelectors.getLoading);
+  const isLoggedIn = useSelector(authSelectors.getLoggedIn);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password, name } = e.target;
+    const { email, password, name, button } = e.target;
+    button.disabled = { loading };
 
     dispatch(
       register({
@@ -66,10 +74,21 @@ export default function RegisterView() {
           required
         />
         <br />
-        <Submit type="submit" id="button">
+        <Submit type="submit" id="button" disabled={false}>
           Sign up
         </Submit>
+        <Loader
+          visible={loading}
+          type="Circles"
+          color="#d0ff00"
+          height={20}
+          width={20}
+        />
       </FormS>
+
+      {error && <Error>{error}</Error>}
+
+      {isLoggedIn ? <Redirect exact to="/" /> : null}
     </>
   );
 }

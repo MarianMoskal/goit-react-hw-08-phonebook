@@ -24,7 +24,7 @@ const Input = styled.input`
 
 const Submit = styled.button`
   font-weight: 500;
-  margin-top: 10px;
+  margin: 10px 0;
   border-radius: 6px;
   border: none;
   background-color: orange;
@@ -45,4 +45,10 @@ const Title = styled.h2`
   color: yellow;
 `;
 
-export { Label, Input, Submit, FormS, Spinner, Title };
+const Error = styled.p`
+  color: yellow;
+  text-align: center;
+  margin: 0, auto;
+`;
+
+export { Label, Input, Submit, FormS, Spinner, Title, Error };

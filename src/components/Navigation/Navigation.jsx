@@ -8,6 +8,8 @@ import {
 } from "./Navigation.styled.jsx";
 
 const Navigation = () => {
+  const style = { color: "blue" };
+  const activeStyle = { color: "white" };
   const isLoggedIn = useSelector(authSelectors.getLoggedIn);
 
   return (
@@ -17,15 +19,15 @@ const Navigation = () => {
           <UserMenu />
         ) : (
           <>
-            <NavLink exact to="/">
+            <NavLink exact to="/" style={style} activeStyle={activeStyle}>
               <span>Home</span>
             </NavLink>
 
-            <NavLink to="/login">
+            <NavLink to="/login" style={style} activeStyle={activeStyle}>
               <span>Log in</span>
             </NavLink>
 
-            <NavLink to="/register">
+            <NavLink to="/register" style={style} activeStyle={activeStyle}>
               <span>Sign up</span>
             </NavLink>
           </>

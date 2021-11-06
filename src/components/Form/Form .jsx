@@ -1,30 +1,36 @@
 import { Label, Input, Submit, FormS, Spinner } from "./index";
-import { useGetContactsQuery, useAddContactMutation } from "API/contacts-api";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { getContacts, addContact } from "redux/contacts/contacts-operations";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
-function onSubmit(e, contacts, addContact) {
+function onSubmit(e, contacts, addContact, dispatch) {
   e.preventDefault();
 
   const { name, number } = e.target;
-  console.log(name.value);
   const foundEl = contacts?.find(
     (el) => el.name.toLowerCase() === name.value.toLowerCase()
   );
 
   foundEl
     ? alert(`${name.value} is already in your contacts!`)
-    : addContact({ name: name.value, number: number.value });
+    : dispatch(addContact({ name: name.value, number: number.value }));
 
   e.target.reset();
 }
 
 export default function Form() {
-  const { data: contacts } = useGetContactsQuery();
-  const [addContact, { isLoading }] = useAddContactMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(getContacts()), [dispatch]);
+
+  const { contacts, addContactLoading } = useSelector(
+    (state) => state.contacts
+  );
 
   return (
-    <FormS onSubmit={(e) => onSubmit(e, contacts, addContact)}>
+    <FormS onSubmit={(e) => onSubmit(e, contacts, addContact, dispatch)}>
       <Label htmlFor="name">Name</Label>
       <Input
         type="text"
@@ -49,7 +55,7 @@ export default function Form() {
 
       <Spinner>
         <Loader
-          visible={isLoading}
+          visible={addContactLoading}
           type="Circles"
           color="#d0ff00"
           height={20}

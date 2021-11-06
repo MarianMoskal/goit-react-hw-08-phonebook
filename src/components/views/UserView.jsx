@@ -9,18 +9,18 @@ import {
 } from "../views-styles/UserView.styled";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { useGetContactsQuery } from "API/contacts-api";
-// import { useSelector } from "react-redux";
-// import axios from 'axios';
+import { useSelector, useDispatch } from "react-redux";
+import { getContacts } from "redux/contacts/contacts-operations";
+import { useEffect } from "react";
 
 export default function UserView() {
-  // const token = useSelector(state => state.auth.token)
-  const { data: contacts, error, isFetching: loading } = useGetContactsQuery();
+  const dispatch = useDispatch();
 
-  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // // console.log(loading);
-  // const contacts = axios.get("https://connections-api.herokuapp.com/contacts")
-  // console.log(contacts)
+  useEffect(() => dispatch(getContacts()), [dispatch]);
+
+  const { contacts, getContactsLoading, error } = useSelector(
+    (state) => state.contacts
+  );
 
   return (
     <>
@@ -29,7 +29,9 @@ export default function UserView() {
         <Form />
       </Container>
 
-      {error ? <SecondaryTitle>{error.data}</SecondaryTitle> : null}
+      {error ? (
+        <SecondaryTitle>Ooops... Something went wrong</SecondaryTitle>
+      ) : null}
 
       {contacts?.length > 0 ? (
         <Container>
@@ -39,14 +41,14 @@ export default function UserView() {
         </Container>
       ) : null}
 
-      {!contacts && !loading && !error && (
+      {contacts?.length === 0 && !getContactsLoading && !error && (
         <SecondaryTitle>No contacts yet</SecondaryTitle>
       )}
 
-      {loading ? (
+      {getContactsLoading ? (
         <Spinner>
           <Loader
-            visible={loading}
+            visible={getContactsLoading}
             type="Circles"
             color="#d0ff00"
             height={50}

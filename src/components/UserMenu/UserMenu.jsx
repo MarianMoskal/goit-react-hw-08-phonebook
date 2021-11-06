@@ -8,8 +8,6 @@ export default function UserMenu() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  //   console.log(user);
-
   return (
     <>
       <span>

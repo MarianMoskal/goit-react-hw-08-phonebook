@@ -5,8 +5,11 @@ const Nav = styled.nav`
   display: flex;
   background-color: orange;
   justify-content: space-around;
-  padding: 5px 300px 5px 300px;
+  padding: 5px 0 5px 0;
   margin-bottom: 10px;
+  @media (min-width: 800px) {
+    padding: 5px 200px 5px 200px;
+  }
 `;
 
 const Button = styled.button`

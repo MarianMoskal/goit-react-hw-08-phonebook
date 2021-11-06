@@ -9,15 +9,23 @@ const Button = styled.input`
 `;
 
 const Item = styled.span`
-  display: inline-block;
-  min-width: 400px;
+  /* display: flex; */
   margin-right: 20px;
+
+  @media (min-width: 550px) {
+    display: inline-block;
+    min-width: 400px;
+  }
 `;
 
 const Name = styled.span`
   display: inline-block;
-  min-width: 200px;
+  min-width: 50px;
   margin-right: 20px;
+
+  @media (min-width: 550px) {
+    min-width: 200px;
+  }
 `;
 
 const Spinner = styled.span`
