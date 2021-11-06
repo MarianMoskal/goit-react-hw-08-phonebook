@@ -1,4 +1,4 @@
-import { Switch, Redirect } from "react-router";
+import { Switch } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { lazy, Suspense, useEffect } from "react";
 import { fetchCurrentUser } from "redux/auth/auth-operations";
@@ -34,7 +34,7 @@ export default function App() {
         <>
           <AppBar />
           <Switch>
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<Title>Loading...</Title>}>
               <PublicRoute exact path="/">
                 <HomeView />
               </PublicRoute>
